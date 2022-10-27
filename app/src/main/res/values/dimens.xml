@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="list_item_height">200dp</dimen>
+    <dimen name="padding">20dp</dimen>
+    <dimen name="textSize">40sp</dimen>
+    <dimen name="padding2">16dp</dimen>
+    <dimen name="margin1">8dp</dimen>
+    <dimen name="margin2">16dp</dimen>
+</resources>
