@@ -1,4 +1,6 @@
-package com.example.android.newsappusingguardianapi;
+package com.example.android.painlessevroute;
+
+import com.mapbox.geojson.Point;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,13 +13,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class QueryUtils {
 
-    public static List<Article> fetchNewsData(String stringUrl) {
+    //we send request to backend
+    //we get a response, parse JSON data into a Route instance
+    //return Route
+    public static Route fetchRoute(String stringUrl) {
         if (stringUrl == null) {
             return null;
         }
@@ -88,41 +92,31 @@ public class QueryUtils {
         return result.toString();
     }
 
-    private static List<Article> extractDataFromJson(String jsonResponse) {
+    private static Route extractDataFromJson(String jsonResponse) {
 
-        List<Article> newsList = new ArrayList<>();
+        Route route = new Route();
+
         try {
 
             JSONObject json = new JSONObject(jsonResponse);
-            JSONObject response = json.getJSONObject("response");
-            JSONArray results = response.getJSONArray("results");
 
-            for (int i = 0; i < results.length(); i++) {
+            JSONArray junctions = json.getJSONArray("junctions");
 
-                JSONObject halloweenNews = results.getJSONObject(i);
-                String title = halloweenNews.getString("webTitle");
-                String author = "Unknown Author";
-                String section = halloweenNews.getString("sectionName");
-                String date = halloweenNews.getString("webPublicationDate");
-                String url = halloweenNews.getString("webUrl");
+            for (int i = 0; i < junctions.length(); i++) {
 
-                JSONArray tags = halloweenNews.getJSONArray("tags");
-                for (int j = 0; j < tags.length(); j++) {
-                    JSONObject tag = tags.getJSONObject(j);
-                    String tagtype = tag.getString("type");
-                    if (tagtype.equals("contributor")) {
-                        author = tag.getString("webTitle");
-                    }
-                }
+                JSONObject junction = junctions.getJSONObject(i);
+                double latitude = junction.getDouble("latitude");
+                double longitude = junction.getDouble("longitude");
 
-                Article newsObject = new Article(title, author, date, url, section);
-                newsList.add(newsObject);
+
+                Point j = Point.fromLngLat(longitude, latitude);
+                route.addJunction(j);
             }
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return newsList;
+        return route;
     }
 }

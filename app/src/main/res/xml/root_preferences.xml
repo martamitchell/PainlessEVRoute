@@ -1,0 +1,55 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="Which are painful?">
+
+        <SwitchPreferenceCompat
+            app:key="pain-unpaved"
+            app:title="Unpaved roads" />
+
+        <SwitchPreferenceCompat
+            app:key="pain-paved"
+            app:title="Paved roads" />
+
+        <SwitchPreferenceCompat
+            app:key="pain-tolls"
+            app:title="Toll" />
+
+        <SwitchPreferenceCompat
+            app:key="pain-oneway"
+            app:title="One-way roads" />
+
+        <SwitchPreferenceCompat
+            app:key="pain-twoway"
+            app:title="Two-way roads" />
+
+        <SwitchPreferenceCompat
+            app:key="pain-freeway"
+            app:title="Freeway" />
+
+        <SwitchPreferenceCompat
+            app:key="pain-highway"
+            app:title="Highway" />
+
+        <SwitchPreferenceCompat
+            app:key="pain-city-speed"
+            app:title="City road" />
+
+        <SwitchPreferenceCompat
+            app:key="pain-local-speed"
+            app:title="Local road" />
+
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="sync"-->
+<!--            app:title="@string/sync_title" />-->
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:dependency="sync"-->
+<!--            app:key="attachment"-->
+<!--            app:summaryOff="@string/attachment_summary_off"-->
+<!--            app:summaryOn="@string/attachment_summary_on"-->
+<!--            app:title="@string/attachment_title" />-->
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

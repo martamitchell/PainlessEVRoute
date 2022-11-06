@@ -1,4 +1,4 @@
-package com.example.android.newsappusingguardianapi;
+package com.example.android.painlessevroute;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.android.newsappusingguardianapi", appContext.getPackageName());
+        assertEquals("com.example.android.painlessevroute", appContext.getPackageName());
     }
 }

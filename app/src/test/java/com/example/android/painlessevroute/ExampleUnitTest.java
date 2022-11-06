@@ -1,4 +1,4 @@
-package com.example.android.newsappusingguardianapi;
+package com.example.android.painlessevroute;
 
 import org.junit.Test;
 
