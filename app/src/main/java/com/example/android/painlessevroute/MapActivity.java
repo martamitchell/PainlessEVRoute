@@ -1,42 +1,26 @@
 package com.example.android.painlessevroute;
 
+import android.annotation.SuppressLint;
+import android.app.LoaderManager;
+import android.content.Intent;
+import android.content.Loader;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import android.app.LoaderManager;
-import android.content.Loader;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.view.View;
-import android.widget.TextView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.mapbox.android.gestures.Utils;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
-import com.mapbox.api.directions.v5.models.DirectionsResponse;
-import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.api.directions.v5.models.RouteOptions;
 import com.mapbox.api.matching.v5.MapboxMapMatching;
 import com.mapbox.api.matching.v5.models.MapMatchingMatching;
 import com.mapbox.api.matching.v5.models.MapMatchingResponse;
 import com.mapbox.bindgen.Expected;
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.FeatureCollection;
-import com.mapbox.geojson.LineString;
 import com.mapbox.geojson.Point;
-import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
-import com.mapbox.maps.extension.style.layers.generated.LineLayer;
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
-import com.mapbox.maps.plugin.Plugin;
 import com.mapbox.navigation.base.options.NavigationOptions;
 import com.mapbox.navigation.base.route.NavigationRoute;
 import com.mapbox.navigation.base.route.NavigationRouterCallback;
@@ -50,11 +34,10 @@ import com.mapbox.navigation.ui.maps.route.arrow.model.RouteArrowOptions;
 import com.mapbox.navigation.ui.maps.route.line.api.MapboxRouteLineApi;
 import com.mapbox.navigation.ui.maps.route.line.api.MapboxRouteLineView;
 import com.mapbox.navigation.ui.maps.route.line.model.MapboxRouteLineOptions;
-import com.mapbox.navigation.ui.maps.route.line.model.NavigationRouteLine;
+import com.mapbox.navigation.ui.maps.route.line.model.RouteLine;
 import com.mapbox.navigation.ui.maps.route.line.model.RouteLineClearValue;
 import com.mapbox.navigation.ui.maps.route.line.model.RouteLineError;
 import com.mapbox.navigation.ui.maps.route.line.model.RouteSetValue;
-import com.mapbox.navigation.ui.maps.route.line.model.RouteLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +47,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Route>, Callback<MapMatchingResponse>, NavigationRouterCallback, MapboxNavigationConsumer<Expected<RouteLineError, RouteSetValue>> {
+public class MapActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Route>, Callback<MapMatchingResponse>, NavigationRouterCallback, MapboxNavigationConsumer<Expected<RouteLineError, RouteSetValue>> {
 
     public static final int ROUTE_LOADER_ID = 1;
     public static final String REQUEST_URL =
@@ -86,15 +69,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 
+        // initialize the setting button (lower right side)
         FloatingActionButton optionsButton = (FloatingActionButton) findViewById(R.id.toggleOptions);
         optionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                // open the settings activity
+                Intent settingsIntent = new Intent(MapActivity.this, SettingsActivity.class);
                 startActivity(settingsIntent);
             }
         });
 
+        // initialize the search button
+        FloatingActionButton searchButton = (FloatingActionButton) findViewById(R.id.addressSearch);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // open the settings activity
+                Intent addressSearch = new Intent(MapActivity.this, AddressSearch.class);
+                startActivity(addressSearch);
+            }
+        });
 
 
         //initialize mapbox map
@@ -121,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mapboxNavigation.startTripSession();
         //done initializing mapbox map
 
-        //loading a route to display
+        //loading a route to display (call to the back-end API)
         LoaderManager loaderManager = getLoaderManager();
         //calls onCreateLoader
         loaderManager.initLoader(ROUTE_LOADER_ID, null, this);
@@ -132,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Route> onCreateLoader(int id, Bundle args) {
-        //we have url and we call RouteLoader class
         return new RouteLoader(this, REQUEST_URL, PreferenceManager.getDefaultSharedPreferences(this));
     }
 
@@ -160,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     //when enqueueCall is done we end up here:
-    //the reponse of this is a list of line segments and we tell mapbox to display the lines
+    //the response of this is a list of line segments and we tell mapbox to display the lines
     @Override
     public void onResponse(Call<MapMatchingResponse> call, Response<MapMatchingResponse> response) {
         if (response.isSuccessful()) {
