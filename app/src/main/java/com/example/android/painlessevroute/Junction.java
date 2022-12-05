@@ -1,9 +1,9 @@
 package com.example.android.painlessevroute;
 
 public class Junction {
-    private double mLatitude;
-    private double mLongitude;
-    private long mJunctionId;
+    private final double mLatitude;
+    private final double mLongitude;
+    private final long mJunctionId;
 
     public Junction(double latitude, double longitude, long junctionId) {
         mLatitude = latitude;

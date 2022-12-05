@@ -8,7 +8,7 @@ import java.util.List;
 
 //list of points to visit
 public class Route {
-    private List<Point> mJunctions = new ArrayList<>();
+    private final List<Point> mJunctions = new ArrayList<>();
 
     public Route() {
 

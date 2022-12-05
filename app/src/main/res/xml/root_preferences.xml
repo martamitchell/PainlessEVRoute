@@ -22,11 +22,11 @@
             app:title="Two-way roads" />
 
         <SwitchPreferenceCompat
-            app:key="pain-freeway"
+            app:key="pain-freeway-speed"
             app:title="Freeway" />
 
         <SwitchPreferenceCompat
-            app:key="pain-highway"
+            app:key="pain-highway-speed"
             app:title="Highway" />
 
         <SwitchPreferenceCompat

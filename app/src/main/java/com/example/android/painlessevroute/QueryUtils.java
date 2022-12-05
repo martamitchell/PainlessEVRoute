@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 
@@ -76,7 +77,7 @@ public class QueryUtils {
         StringBuilder result = new StringBuilder();
         BufferedReader bufferedReader = null;
 
-        streamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+        streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         bufferedReader = new BufferedReader(streamReader);
 
         try {
