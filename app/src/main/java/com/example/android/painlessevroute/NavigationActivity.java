@@ -203,7 +203,7 @@ public class NavigationActivity extends AppCompatActivity implements LoaderManag
                 //.voiceInstructions(true)
                 //.voiceUnits("metric")
                 .bannerInstructions(true)
-qafd231q232q                .overview("full")
+                .overview("full")
                 .annotations("maxspeed,duration")
                 .waypointIndices(0, (coordinates.size() - 1))
                 .build();
@@ -233,4 +233,3 @@ qafd231q232q                .overview("full")
         loadingProgress.setVisibility(View.GONE);
     }
 }
-\]]]///////
