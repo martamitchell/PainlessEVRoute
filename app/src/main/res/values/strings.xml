@@ -2,7 +2,7 @@
     <string name="app_name">Painless EV Route</string>
     <string name="no_internet_text">Please connect to the Internet</string>
     <string name="no_news_text">There is no news to display right now</string>
-    <string name="mapbox_access_token">pk.eyJ1IjoibWFydGFtaXRjaGVsbCIsImEiOiJjbDl1ZGY1Z2owZmhhM3Vueno1MGx6ZWlmIn0.Wmahkx5iR-YLYdoonadT3g</string>
+    <string name="mapbox_access_token">access token goes here</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
